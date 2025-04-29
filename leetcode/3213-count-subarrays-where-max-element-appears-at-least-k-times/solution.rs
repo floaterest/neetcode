@@ -1,0 +1,21 @@
+use std::collections::VecDeque;
+impl Solution {
+    pub fn count_subarrays(nums: Vec<i32>, k: i32) -> i64 {
+        let m = nums.iter().max().unwrap();
+        let mut ix = VecDeque::new();
+        nums.iter()
+            .enumerate()
+            .map(|(j, x)| {
+                if x == m {
+                    ix.push_front(j);
+                }
+                if ix.len() > k as usize {
+                    ix.pop_back();
+                }
+                if ix.len() == k as usize { *ix.back().unwrap() + 1 } else { 0 }
+            })
+            .sum::<usize>() as i64
+    }
+}
+
+
